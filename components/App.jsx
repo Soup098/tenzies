@@ -10,6 +10,8 @@ export default function App(){
                 key={dieObject.id} 
                 value={dieObject.value}
                 isHeld={dieObject.isHeld}
+                hold={holdDie}
+                id={dieObject.id}
             />
     ))
 
@@ -26,7 +28,21 @@ export default function App(){
         return(diceArray)
     }
     function handleClick(){
-        setDice(generateAllNewDice)
+        setDice(prevDice =>
+            prevDice.map(die =>
+                die.isHeld
+                    ? {...die, value: die.value}
+                    : {...die, value: Math.floor(Math.random()*6)+1}
+            )
+        )
+    }
+    function holdDie(id){
+        setDice(prevDice => 
+            prevDice.map(die =>
+                die.id === id
+                    ? {...die, isHeld: !die.isHeld}
+                    : die
+            ))
     }
 
     return(
