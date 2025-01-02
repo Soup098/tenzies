@@ -13,8 +13,7 @@ export default function Die(props){
             className="die" 
             style={styles} 
             onClick={holdDie}// reference to the holdDie function.
-            >
-            {props.value}
-        </button>
+            aria-label={`Die with value of ${props.value}`}
+            >{props.value}</button>
     )
 }

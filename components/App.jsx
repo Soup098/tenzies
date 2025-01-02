@@ -1,5 +1,5 @@
 import Die from "../components/Die.jsx"
-import { useState } from "react"
+import { useState, useRef, useEffect} from "react"
 import { nanoid } from "nanoid"
 import Confetti from "react-confetti"
 
@@ -7,6 +7,7 @@ import Confetti from "react-confetti"
 export default function App(){
     //initiate the app state with the array of dice objects
     const [dice, setDice] = useState(generateAllNewDice)
+    const buttonRef = useRef(null)
     //create variable called diceElements that is an array of <Die /> components using the values of the dice array for props. rendered to the page in the App() return
     const diceElements = dice.map((dieObject) => (
             <Die 
@@ -20,6 +21,12 @@ export default function App(){
     //logic to switch the gameWon boolean to true if all dice are held and have the same value
     const gameWon = dice.every(die => die.isHeld) &&
                 dice.every(die => die.value === dice[0].value)
+
+    useEffect(() => {
+        if (gameWon){
+            buttonRef.current.focus()
+        }
+    }, [gameWon])
     //function to generate an array of 10 dice objects with random number values, and initiate an isHeld value of false. called by the useState() on page render
     function generateAllNewDice(){
         let diceArray = []
@@ -63,7 +70,7 @@ export default function App(){
             <div className="dice-container">
                 {diceElements}
             </div>
-            <button className="roll-btn" onClick={rollDice}>
+            <button ref={buttonRef} className="roll-btn" onClick={rollDice}>
                 {gameWon ? "New Game" : "Roll"}
             </button>
             {gameWon 
