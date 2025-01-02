@@ -57,3 +57,14 @@ main{
 .roll-btn:active{
     transform: scale(.98);
 }
+.title{
+    font-size: 3rem;
+    margin: 0;
+}
+.instructions{
+    font-family: Karla, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin: -16px 46px;
+    text-align: center;
+}
